@@ -49,7 +49,7 @@ void xatc_wizard_done() {
     set_bed_leveling_enabled(leveling_was_active);
     SET_SOFT_ENDSTOP_LOOSE(false);
     ui.goto_screen(menu_advanced_settings);
-    do_z_clearance(4); // raise up after
+    do_z_clearance(XATC_SAFE_MOVE_Z); // raise up after finished
   }
   if (ui.should_draw())
     MenuItem_static::draw(LCD_HEIGHT >= 4, GET_TEXT_F(MSG_XATC_DONE));
@@ -80,7 +80,7 @@ void xatc_wizard_update_z_offset() {
 void xatc_wizard_set_offset_and_go_to_next_point() {
   // Set Z-offset at probed point
   xatc.z_offset[manual_probe_index++] = probe.offset.z + current_position.z - measured_z;
-  do_z_clearance(4); // raise up after
+  do_z_clearance(XATC_SAFE_MOVE_Z); // raise up after so move to next point is safe
   // Go to next point
   ui.goto_screen(xatc_wizard_goto_next_point);
 }
@@ -137,7 +137,6 @@ void xatc_wizard_goto_next_point() {
 
       // Deploy certain probes before starting probing
       TERN_(BLTOUCH, do_z_clearance(Z_CLEARANCE_DEPLOY_PROBE));
-      //do_z_clearance(XATC_START_Z); // go ahead and raise for safety during testing
 
       xatc.set_enabled(false);
       measured_z = probe.probe_at_point(x, XATC_Y_POSITION, PROBE_PT_STOW);
@@ -211,7 +210,7 @@ void xatc_wizard_continue() {
   set_all_unhomed();
   ui.goto_screen(xatc_wizard_homing);
   queue.inject_P(G28_STR);
-  manual_probe_index = 0; // reset to zero so you can run again
+  manual_probe_index = 0; // reset to zero so you can run twist again
 }
 
 #endif // X_AXIS_TWIST_COMPENSATION
