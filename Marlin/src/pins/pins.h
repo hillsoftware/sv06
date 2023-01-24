@@ -618,7 +618,7 @@
 #elif MB(PANDA_PI_V29)
   #include "stm32f1/pins_PANDA_PI_V29.h"        // STM32F103RCT6                          env:PANDA_PI_V29
 #elif MB(SOVOL_V131)
-  #include "stm32f1/pins_SOVOL_V131.h"          // STM32F1                                env:STM32F103RET6_sovol_maple
+  #include "stm32f1/pins_SOVOL_V131.h"          // GD32F1                                 env:GD32F103RET6_sovol_maple
 
 //
 // ARM Cortex-M4F
