@@ -2,6 +2,8 @@
 
 ## NOTE THIS IS HIGHLY EXPERIMENTAL FIRMWARE! USE AT YOUR OWN RISK!
 
+## This is for the STOCK Sovol mainboard that comes with the SV06
+
 ### Testing steps for this firmware.
 
 * Grab latest version (or whichever version you like) from the release section here
