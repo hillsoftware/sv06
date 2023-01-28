@@ -6,7 +6,7 @@
 
 ### Testing steps for this firmware.
 
-* Grab latest version (or whichever version you like) from the release section here
+* Grab latest version (or whichever version you like) from the release section [here](https://github.com/hillsoftware/sv06/releases)
 * Put binary on a fresh FAT32 formatted SD card and insert the sd card into your SV06 while it is powered off
 * Boot up SV06.  It may take 10-20 seconds. Screen will flash and it should boot. The SV06 Stock board can sometimes be temperamental with sd cards & flashing, if your flash fails & you're left with a blue screen only, switch off & try another card, a new name brand with a fresh format helps.
 * It should reset the eeprom when changing a major firmware, but you can config/advanced/initialize eeprom & reset too if you wish.
