@@ -17,7 +17,7 @@
 * Store Settings is a good idea here incase of reboot
 * Autotune Bed PID Configuration / Advanced / Temperatures / PID Autotune Bed (wait for finish)
 * Store Settings is a good idea here incase of reboot
-* Before doing any of the following steps. Make sure there is NO filament hanging out of the nozzle . The MPC calibration done previously can cause filament to ooze out. This can cause you to get faulty calibrations when you do a Z offset or X-Twist as the dry filament will make you think you are closer to the bed that you are!
+* Before doing any of the following steps. Make sure there is NO filament hanging out of the nozzle . The Extruder autotune done previously can cause filament to ooze out. This can cause you to get faulty calibrations when you do a Z offset or X-Twist as the dry filament will make you think you are closer to the bed that you are!
 * Go to Configuration/Advanced/ProbeWizard/Z Offset Wizard (No X-Twist) & calibrate your z offset. Save settings.
 ## If you downloaded the UBL version follow these steps next
 * Go to Motion / Unified Bed Leveling / UBL Mesh Wizard ( Rory's Video  for info on that)
@@ -31,7 +31,7 @@
 * Do a test print now before trying x-twist.   This is to see if the UBL or bilinear leveling is enough to compensate for your issues with first layers and such before even trying the x-twist. Make sure you have proper startup g-code to use the UBL or bi-linear mesh as mentioned below. 
 * If your print is good.  Congratulations and happy printing.
 * If it didn’t help enough, go ahead and run X-Twist. Configuration / Advanced / Probe Wizard / X-Twist
-* IMPORTANT ! Rerun your UBL or linear mesh after doing the X-Twist ( the twist doesn’t modify existing mesh data, if modifies future probed points as the UBL or bi-linear leveling does its thing )
+* IMPORTANT ! Rerun your UBL or bi-linear mesh after doing the X-Twist ( the twist doesn’t modify existing mesh data, if modifies future probed points as the UBL or bi-linear leveling does its thing )
 * Save settings / Do a test print
 * If your print is good, happy printing. If not, come on to the SV06 Facebook group and let us know. Pictures, detail, data, etc can help us in possibly identifying your issue and seeing if we can improve the firmware.
 * Also if you find the UBL and bi-linear are not enough for your unit, you can download the manual-mesh version. This one functions like the bi-linear but you manually use the paper or feeler guage with the nozzle for the 5x5 array.  Be sure to save after.  For people who have struggled with their units getting good first layers with stock firmware, or my UBL or bi-linear version, the manual mesh has fixed their issue.  Mind you this is a manual process and takes the probe out of the picture.
