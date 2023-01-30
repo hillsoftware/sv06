@@ -2,9 +2,11 @@
 
 ## NOTE THIS IS HIGHLY EXPERIMENTAL FIRMWARE! USE AT YOUR OWN RISK!
 
+## This is for the STOCK Sovol mainboard that comes with the SV06
+
 ### Testing steps for this firmware.
 
-* Grab latest version (or whichever version you like) from the release section here
+* Grab latest version (or whichever version you like) from the release section [here](https://github.com/hillsoftware/sv06/releases)
 * Put binary on a fresh FAT32 formatted SD card and insert the sd card into your SV06 while it is powered off
 * Boot up SV06.  It may take 10-20 seconds. Screen will flash and it should boot. The SV06 Stock board can sometimes be temperamental with sd cards & flashing, if your flash fails & you're left with a blue screen only, switch off & try another card, a new name brand with a fresh format helps.
 * It should reset the eeprom when changing a major firmware, but you can config/advanced/initialize eeprom & reset too if you wish.
@@ -17,25 +19,38 @@
 * Store Settings is a good idea here incase of reboot
 * Before doing any of the following steps. Make sure there is NO filament hanging out of the nozzle . The MPC calibration done previously can cause filament to ooze out. This can cause you to get faulty calibrations when you do a Z offset or X-Twist as the dry filament will make you think you are closer to the bed that you are!
 * Go to Configuration/Advanced/ProbeWizard/Z Offset Wizard (No X-Twist) & calibrate your z offset. Save settings.
+## If you downloaded the UBL version follow these steps next
 * Go to Motion / Unified Bed Leveling / UBL Mesh Wizard ( Rory's Video  for info on that)
 * Let the UBL probe all the points it can. It won’t be able to do all 100. This is normal.
 * Settings should autosave after UBL finishes, but you can save yourself too if you wish
-* Do a test print now before trying x-twist.   This is to see if the UBL is enough to compensate for your issues with first layers and such before even trying the x-twist. Make sure you have proper startup g-code to use the UBL mesh as mentioned in Rory’s video linked above and below. This is also noted in the UBL section on the next page.
+## If you downloaded the bi-linear version follow these steps next
+* Go to Motion / Bed Leveling / Level Bed
+* Let it probe all 25 points
+* When finished do a store settings to save the mesh data
+## The following steps are for UBL or bi-linear versions
+* Do a test print now before trying x-twist.   This is to see if the UBL or bilinear leveling is enough to compensate for your issues with first layers and such before even trying the x-twist. Make sure you have proper startup g-code to use the UBL or bi-linear mesh as mentioned below. 
 * If your print is good.  Congratulations and happy printing.
 * If it didn’t help enough, go ahead and run X-Twist. Configuration / Advanced / Probe Wizard / X-Twist
-* IMPORTANT ! Rerun UBL after doing the X-Twist ( the twist doesn’t modify existing mesh data, if modifies future probed points as the UBL does its thing )
+* IMPORTANT ! Rerun your UBL or linear mesh after doing the X-Twist ( the twist doesn’t modify existing mesh data, if modifies future probed points as the UBL or bi-linear leveling does its thing )
 * Save settings / Do a test print
-* If your print is good, happy printing. If not, come on to the SV06 Facebook group and let us know. Pictures, detail, data, etc can help us in possibly identifying your issue and seeing if we can improve the firmware
+* If your print is good, happy printing. If not, come on to the SV06 Facebook group and let us know. Pictures, detail, data, etc can help us in possibly identifying your issue and seeing if we can improve the firmware.
+* Also if you find the UBL and bi-linear are not enough for your unit, you can download the manual-mesh version. This one functions like the bi-linear but you manually use the paper or feeler guage with the nozzle for the 5x5 array.  Be sure to save after.  For people who have struggled with their units getting good first layers with stock firmware, or my UBL or bi-linear version, the manual mesh has fixed their issue.  Mind you this is a manual process and takes the probe out of the picture.
 
-## Firmware Features Used
+## Highlights of features used in the three firmware builds
 
 * Unified Bed Leveling  (UBL) an optimized leveling feature that stores a high data point mesh in non-volatile storage. In your startup G-Code you just have it do a 9 point quick probe to figure out the tilt of the bed, and the high resolution mesh is adjusted.
-*  Add the following to your Gcode in your slicer after the G28 and after your printer has heated up to temp, but before any print starts.  This will load your mesh and do that 9 point measurement to determine how to adjust the mesh if needed.
+*  If you use UBL, add the following to your Gcode in your slicer after the G28 and after your printer has heated up to temp, but before any print starts.  This will load your mesh and do that 9 point measurement to determine how to adjust the mesh if needed.
 
 ```
 G29 A ; Unified bed-level (BL-Touch)
 G29 L0 ; Load Mesh Slot 0
 G29 J3 ; Probe 9 points to check mesh
+```
+
+* If you use bi-linear or manual mesh you can add the below line to your startup gcode after the G28. I have the firmware set to turn on leveling for you after a G28, but I would add the below line to be safe.
+
+```
+M420 S1
 ```
 
 * X-Twist Compensation  Compensates for a twisted X axis by having the user manually take three measurements of the nozzle to the bed and compares them to the probes calculation for that point. It then modifies all future probe points to try to compensate for the twist in the X-Axis. It is very important that after doing the twist you re-run the UBL wizard since the X-Twist values don’t change the existing mesh in memory, only as new points are probed.  Also you need to be as precise and consistent as possible when calibrating the 3 X-Twist points. It is recommended to use a feeler gauge so you can make sure each of the three points has the nozzle exactly the same distance from the bed as the others.
