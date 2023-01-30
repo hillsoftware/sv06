@@ -60,3 +60,15 @@ M420 S1
 * Filament Runout Sensor Support This feature is turned off by default. The SV06 doesn’t come with a runout sensor, so here is a [link](https://www.printables.com/model/347596-endstop-runout-sensor) to Rory’s design for a mount to install one on your SV06
 *  Z-Offset Wizard. If you don’t need the X-Twist because your X gantry isn’t twisted you can use this wizard to adjust your Z-Offset
 * Rory’s tweaks
+
+## Common Troubleshooting
+
+* Firmware flashing seems to be a problem for a lot of people. To start use a freshly FAT32 formatted sdcard. Make sure there are no other .bin files on it. Copy the firmware you downloaded to it. I recommend renaming the file to something short and unique. Any time you flash a new firmware it needs to be a different name than the last. Make sure it still has the .bin on the end of the filename. If it fails to flash, try a different sdcard.
+
+* When you first home your SV06 after changing firmware, you might find the X axis doesn't go all the way to the left and tap the left side of the unit, or the Y axis doesn't go all the way to the back and tap the back of the frame. Or you may find it grinds against the left or back on X or Y. If this is the case, **YOU MUST** tweak your sensorless homing values for X and Y. If you find the axis in question doesn't move far enough to make contact with the far left or back, you want to decrease the sensitivity of that axis.  Likewise if it grinds against the left or back, you want to increase the sensitivity of that axis. Go to Configuration / Advanced / Sensorless Homing and change the X or Y in the direction described above.  Go in increments of 5 when changing a value. **Save settings when you find something that works.**
+
+* The manual mesh firmware works just like bi-linear but is not automated since it doesn't use the probe. To start it you do exactly the same as bi-linear.  You go to Motion / Bed Leveling / Level Bed. Then use your paper to adjust all 25 points to have the same tug as the others. You can also use a feeler gauge if you want finer precision.
+
+* It is very important when doing pid autotuning, z-offset calibration, bed leveling, e-steps changing, sensorless homing changes, it is very important to save your settings so they persist after powering down and up again later.
+
+* There is a bug in the current Marlin we use where when you try to edit the steps for Z motor or Extruder on the LCD it does not allow you to edit properly.  The values are messed up and it is next to impossible to put in proper values.  It is recommended to use your PC, Octoprint, or similar setup and issues the step settings over g-code.  Then save settings. If you accidentally go into the step edit for Z or the Extruder, just power down and you won't save the bad settings. If you don't have the ability to connect a PC or Octoprint to your printer, but need change your e-steps, you can do it by creating a gcode file on your computer and printing that gcode file.
