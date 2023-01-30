@@ -83,8 +83,8 @@
 // Show the bitmap in Marlin/_Statusscreen.h on the status screen.
 #define CUSTOM_STATUS_SCREEN_IMAGE
 
-#define SHORT_BUILD_VERSION      "2.1.2v55"
-#define STRING_DISTRIBUTION_DATE "2023-01-25"
+#define SHORT_BUILD_VERSION      "2.1.2v56"
+#define STRING_DISTRIBUTION_DATE "2023-01-30"
 #define WEBSITE_URL              "techdungeon.xyz"
 
 // @section machine
@@ -1930,8 +1930,8 @@
  */
 //#define AUTO_BED_LEVELING_3POINT
 //#define AUTO_BED_LEVELING_LINEAR
-//#define AUTO_BED_LEVELING_BILINEAR
-#define AUTO_BED_LEVELING_UBL
+#define AUTO_BED_LEVELING_BILINEAR
+//#define AUTO_BED_LEVELING_UBL
 //#define MESH_BED_LEVELING
 
 /**
