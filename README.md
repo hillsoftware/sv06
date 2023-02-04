@@ -17,7 +17,7 @@
 * Store Settings is a good idea here incase of reboot
 * Autotune Bed PID Configuration / Advanced / Temperatures / PID Autotune Bed (wait for finish)
 * Store Settings is a good idea here incase of reboot
-* Before doing any of the following steps. Make sure there is NO filament hanging out of the nozzle . The MPC calibration done previously can cause filament to ooze out. This can cause you to get faulty calibrations when you do a Z offset or X-Twist as the dry filament will make you think you are closer to the bed that you are!
+* Before doing any of the following steps. Make sure there is NO filament hanging out of the nozzle . The Extruder autotune done previously can cause filament to ooze out. This can cause you to get faulty calibrations when you do a Z offset or X-Twist as the dry filament will make you think you are closer to the bed that you are!
 * Go to Configuration/Advanced/ProbeWizard/Z Offset Wizard (No X-Twist) & calibrate your z offset. Save settings.
 ## If you downloaded the UBL version follow these steps next
 * Go to Motion / Unified Bed Leveling / UBL Mesh Wizard ( Rory's Video  for info on that)
@@ -31,7 +31,7 @@
 * Do a test print now before trying x-twist.   This is to see if the UBL or bilinear leveling is enough to compensate for your issues with first layers and such before even trying the x-twist. Make sure you have proper startup g-code to use the UBL or bi-linear mesh as mentioned below. 
 * If your print is good.  Congratulations and happy printing.
 * If it didn’t help enough, go ahead and run X-Twist. Configuration / Advanced / Probe Wizard / X-Twist
-* IMPORTANT ! Rerun your UBL or linear mesh after doing the X-Twist ( the twist doesn’t modify existing mesh data, if modifies future probed points as the UBL or bi-linear leveling does its thing )
+* IMPORTANT ! Rerun your UBL or bi-linear mesh after doing the X-Twist ( the twist doesn’t modify existing mesh data, if modifies future probed points as the UBL or bi-linear leveling does its thing )
 * Save settings / Do a test print
 * If your print is good, happy printing. If not, come on to the SV06 Facebook group and let us know. Pictures, detail, data, etc can help us in possibly identifying your issue and seeing if we can improve the firmware.
 * Also if you find the UBL and bi-linear are not enough for your unit, you can download the manual-mesh version. This one functions like the bi-linear but you manually use the paper or feeler guage with the nozzle for the 5x5 array.  Be sure to save after.  For people who have struggled with their units getting good first layers with stock firmware, or my UBL or bi-linear version, the manual mesh has fixed their issue.  Mind you this is a manual process and takes the probe out of the picture.
@@ -60,3 +60,15 @@ M420 S1
 * Filament Runout Sensor Support This feature is turned off by default. The SV06 doesn’t come with a runout sensor, so here is a [link](https://www.printables.com/model/347596-endstop-runout-sensor) to Rory’s design for a mount to install one on your SV06
 *  Z-Offset Wizard. If you don’t need the X-Twist because your X gantry isn’t twisted you can use this wizard to adjust your Z-Offset
 * Rory’s tweaks
+
+## Common Troubleshooting
+
+* Firmware flashing seems to be a problem for a lot of people. To start use a freshly FAT32 formatted sdcard. Make sure there are no other .bin files on it. Copy the firmware you downloaded to it. I recommend renaming the file to something short and unique. Any time you flash a new firmware it needs to be a different name than the last. Make sure it still has the .bin on the end of the filename. If it fails to flash, try a different sdcard.
+
+* When you first home your SV06 after changing firmware, you might find the X axis doesn't go all the way to the left and tap the left side of the unit, or the Y axis doesn't go all the way to the back and tap the back of the frame. Or you may find it grinds against the left or back on X or Y. If this is the case, **YOU MUST** tweak your sensorless homing values for X and Y. If you find the axis in question doesn't move far enough to make contact with the far left or back, you want to decrease the sensitivity of that axis.  Likewise if it grinds against the left or back, you want to increase the sensitivity of that axis. Go to Configuration / Advanced / Sensorless Homing and change the X or Y in the direction described above.  Go in increments of 5 when changing a value. **Save settings when you find something that works.**
+
+* The manual mesh firmware works just like bi-linear but is not automated since it doesn't use the probe. To start it you do exactly the same as bi-linear.  You go to Motion / Bed Leveling / Level Bed. Then use your paper to adjust all 25 points to have the same tug as the others. You can also use a feeler gauge if you want finer precision.
+
+* It is very important when doing pid autotuning, z-offset calibration, bed leveling, e-steps changing, sensorless homing changes, it is very important to save your settings so they persist after powering down and up again later.
+
+* There is a bug in the current Marlin we use where when you try to edit the steps for Z motor or Extruder on the LCD it does not allow you to edit properly.  The values are messed up and it is next to impossible to put in proper values.  It is recommended to use your PC, Octoprint, or similar setup and issues the step settings over g-code.  Then save settings. If you accidentally go into the step edit for Z or the Extruder, just power down and you won't save the bad settings. If you don't have the ability to connect a PC or Octoprint to your printer, but need change your e-steps, you can do it by creating a gcode file on your computer and printing that gcode file.
