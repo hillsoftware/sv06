@@ -582,7 +582,9 @@ void _menu_ubl_tools() {
     GCODES_ITEM(MSG_UBL_6_FINE_TUNE_ALL, F("G29P4RT"));
     ACTION_ITEM(MSG_UBL_7_SAVE_MESH, _lcd_ubl_save_mesh_cmd);
     END_MENU();
-  }
+  }  
+  
+
 #endif
 
 #if ENABLED(UBL_MESH_WIZARD)
