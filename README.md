@@ -1,8 +1,10 @@
 # Sovol SV06 2.1.x bugfix build
 
+## This is for the STOCK Sovol mainboard that comes with the SV06
+
 ## NOTE THIS IS HIGHLY EXPERIMENTAL FIRMWARE! USE AT YOUR OWN RISK!
 
-## This is for the STOCK Sovol mainboard that comes with the SV06
+## IF YOU NOTICE WEIRD BEHAVIOR ON FIRST USE OR AFTER UPGRADING VERSIONS, TRY GOING TO CONFIGURE/ADVANCED/INITIALIZE EEPROM and then reboot
 
 ### Testing steps for this firmware.
 
