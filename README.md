@@ -22,7 +22,7 @@
 * Before doing any of the following steps. Make sure there is NO filament hanging out of the nozzle . The Extruder autotune done previously can cause filament to ooze out. This can cause you to get faulty calibrations when you do a Z offset or X-Twist as the dry filament will make you think you are closer to the bed that you are!
 * Go to Configuration/Advanced/ProbeWizard/Z Offset Wizard (No X-Twist) & calibrate your z offset. Save settings.
 ## If you downloaded the UBL version follow these steps next
-* Go to Motion / Unified Bed Leveling / UBL Mesh Wizard ( Rory's Video  for info on that)
+* Go to Motion / Unified Bed Leveling / UBL Mesh Wizard
 * Let the UBL probe all the points it can. It won’t be able to do all 100. This is normal.
 * Settings should autosave after UBL finishes, but you can save yourself too if you wish
 ## If you downloaded the bi-linear version follow these steps next
