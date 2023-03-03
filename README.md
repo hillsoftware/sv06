@@ -20,7 +20,7 @@
 * Autotune Bed PID Configuration / Advanced / Temperatures / PID Autotune Bed (wait for finish)
 * Store Settings is a good idea here incase of reboot
 * Before doing any of the following steps. Make sure there is NO filament hanging out of the nozzle . The Extruder autotune done previously can cause filament to ooze out. This can cause you to get faulty calibrations when you do a Z offset or X-Twist as the dry filament will make you think you are closer to the bed that you are!
-* Go to Configuration/Advanced/ProbeWizard/Z Offset Wizard (No X-Twist) & calibrate your z offset. Save settings.
+* Go to Configuration/Advanced/Probe Offsets /Z Offset Wizard (No X-Twist) & calibrate your z offset. Save settings.
 ## If you downloaded the UBL version follow these steps next
 * Go to Motion / Unified Bed Leveling / UBL Mesh Wizard
 * Let the UBL probe all the points it can. It won’t be able to do all 100. This is normal.
@@ -32,7 +32,7 @@
 ## The following steps are for UBL or bi-linear versions
 * Do a test print now before trying x-twist.   This is to see if the UBL or bilinear leveling is enough to compensate for your issues with first layers and such before even trying the x-twist. Make sure you have proper startup g-code to use the UBL or bi-linear mesh as mentioned below. 
 * If your print is good.  Congratulations and happy printing.
-* If it didn’t help enough, go ahead and run X-Twist. Configuration / Advanced / Probe Wizard / X-Twist
+* If it didn’t help enough, go ahead and run X-Twist. Configuration / Advanced / Probe Offsets / X-Twist
 * IMPORTANT ! Rerun your UBL or bi-linear mesh after doing the X-Twist ( the twist doesn’t modify existing mesh data, if modifies future probed points as the UBL or bi-linear leveling does its thing )
 * Save settings / Do a test print
 * If your print is good, happy printing. If not, come on to the SV06 Facebook group and let us know. Pictures, detail, data, etc can help us in possibly identifying your issue and seeing if we can improve the firmware.
