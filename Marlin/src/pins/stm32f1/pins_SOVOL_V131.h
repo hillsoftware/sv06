@@ -1,6 +1,6 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (c) 2023 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
  * Based on Sprinter and grbl.
  * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
@@ -21,11 +21,14 @@
  */
 #pragma once
 
+/**
+ * Sovol 1.3.1 (GD32F103RET6) board pin assignments
+ */
 
 #include "env_validate.h"
 
 #if HOTENDS > 1 || E_STEPPERS > 1
-  #error "SOVOL V131 only supports one hotend / E-stepper. Comment out this line to continue."
+  #error "SOVOL V131 only supports 1 hotend / E-stepper."
 #endif
 
 #ifndef BOARD_INFO_NAME
@@ -38,19 +41,27 @@
 //#define BOARD_NO_NATIVE_USB
 
 //
+// Release PB4 (Y_ENABLE_PIN) from JTAG NRST role
+//
+#ifndef DISABLE_DEBUG
+  #define DISABLE_DEBUG
+#endif
+
+//
 // EEPROM
 //
 #if NO_EEPROM_SELECTED
   #define IIC_BL24CXX_EEPROM                      // EEPROM on I2C-0
   //#define SDCARD_EEPROM_EMULATION
+  #undef NO_EEPROM_SELECTED
 #endif
 
 #if ENABLED(IIC_BL24CXX_EEPROM)
   #define IIC_EEPROM_SDA                    PA11
   #define IIC_EEPROM_SCL                    PA12
-  #define MARLIN_EEPROM_SIZE               0x800  // 2Kb (24C16)
+  #define MARLIN_EEPROM_SIZE               0x800  // 2K (24C16)
 #elif ENABLED(SDCARD_EEPROM_EMULATION)
-  #define MARLIN_EEPROM_SIZE               0x800  // 2Kb
+  #define MARLIN_EEPROM_SIZE               0x800  // 2K
 #endif
 
 //
@@ -67,9 +78,15 @@
 //
 // Limit Switches
 //
-#define X_STOP_PIN                          PA5
-#define Y_STOP_PIN                          PA6
-#define Z_STOP_PIN                          PA7
+#ifndef X_STOP_PIN
+  #define X_STOP_PIN                        PA5
+#endif
+#ifndef Y_STOP_PIN
+  #define Y_STOP_PIN                        PA6
+#endif
+#ifndef Z_STOP_PIN
+  #define Z_STOP_PIN                        PA7
+#endif
 
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                   PB1   // BLTouch IN
@@ -79,7 +96,7 @@
 // Filament Runout Sensor
 //
 #ifndef FIL_RUNOUT_PIN
-  #define FIL_RUNOUT_PIN                        PA4   // "Pulled-high"
+  #define FIL_RUNOUT_PIN                    PA4   // "Pulled-high"
 #endif
 
 //
@@ -118,13 +135,13 @@
 #define E0_ENABLE_PIN               X_ENABLE_PIN
 
 #if HAS_TMC_UART
+
   /**
    * TMC2208/TMC2209 stepper drivers
    *
    * Hardware serial communication ports.
    * If undefined software serial is used according to the pins below
    */
-  
 
   #define X_SERIAL_TX_PIN                   PC1
   #define X_SERIAL_RX_PIN                   PC1
@@ -140,11 +157,8 @@
 
   // Reduce baud rate to improve software serial reliability
   #define TMC_BAUD_RATE                    19200
+
 #endif // HAS_TMC_UART
-//
-// Release PB4 (Y_ENABLE_PIN) from JTAG NRST role
-//
-#define DISABLE_DEBUG
 
 //
 // Temperature Sensors
@@ -155,42 +169,68 @@
 //
 // Heaters / Fans
 //
-#define HEATER_0_PIN                        PA1   // HEATER1
-#define HEATER_BED_PIN                      PA2   // HOT BED
-
+#ifndef HEATER_0_PIN
+  #define HEATER_0_PIN                      PA1   // HEATER1
+#endif
+#ifndef HEATER_BED_PIN
+  #define HEATER_BED_PIN                    PA2   // HOT BED
+#endif
 #ifndef FAN_PIN
   #define FAN_PIN                           PA0   // FAN
 #endif
-#if PIN_EXISTS(FAN)
-  #define FAN_SOFT_PWM
-#endif
+#define FAN_SOFT_PWM_REQUIRED
 
 //
 // SD Card
 //
 #define SD_DETECT_PIN                       PC7
-#define SDCARD_CONNECTION                ONBOARD
+#define SDCARD_CONNECTION ONBOARD
 #define ONBOARD_SPI_DEVICE                     1
 #define ONBOARD_SD_CS_PIN                   PA4   // SDSS
 #define SDIO_SUPPORT
 #define NO_SD_HOST_DRIVE                          // This board's SD is only seen by the printer
 
+#if ANY(RET6_12864_LCD, HAS_DWIN_E3V2, IS_DWIN_MARLINUI)
+  /**
+   *    RET6 12864 LCD
+   *        ------
+   *  PC6  | 1  2 | PB2
+   *  PB10 | 3  4 | PB11
+   *  PB14   5  6 | PB13
+   *  PB12 | 7  8 | PB15
+   *   GND | 9 10 | 5V
+   *        ------
+   */
+  #define EXP3_01_PIN                       PC6
+  #define EXP3_02_PIN                       PB2
+  #define EXP3_03_PIN                       PB10
+  #define EXP3_04_PIN                       PB11
+  #define EXP3_05_PIN                       PB14
+  #define EXP3_06_PIN                       PB13
+  #define EXP3_07_PIN                       PB12
+  #define EXP3_08_PIN                       PB15
+#endif
+
 #if ENABLED(CR10_STOCKDISPLAY)
 
   #if ENABLED(RET6_12864_LCD)
 
-    // RET6 12864 LCD
-    #define LCD_PINS_RS                     PB12
-    #define LCD_PINS_ENABLE                 PB15
-    #define LCD_PINS_D4                     PB13
+    #define LCD_PINS_RS              EXP3_07_PIN
+    #define LCD_PINS_ENABLE          EXP3_08_PIN
+    #define LCD_PINS_D4              EXP3_06_PIN
 
-    #define BTN_ENC                         PB2
-    #define BTN_EN1                         PB10
-    #define BTN_EN2                         PB14
+    #define BTN_ENC                  EXP3_02_PIN
+    #define BTN_EN1                  EXP3_03_PIN
+    #define BTN_EN2                  EXP3_05_PIN
 
     #ifndef HAS_PIN_27_BOARD
-      #define BEEPER_PIN                    PC6
+      #define BEEPER_PIN             EXP3_01_PIN
     #endif
+
+  #else
+
+    #error "Only the RET6_12864_LCD variant of CR10_STOCKDISPLAY is supported."
+
   #endif
-  
+
 #endif
