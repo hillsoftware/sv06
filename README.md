@@ -116,9 +116,35 @@ Regular users can open and close their own issues, but only the administrators c
  🇺🇸  **Roxanne Neufeld**
        [@Roxy-3D](https://github.com/Roxy-3D)
 
- 🇺🇸  **Keith Bennett**
-       [@thisiskeithb](https://github.com/thisiskeithb)
-       [<kbd>  Donate 💸  </kbd>](https://github.com/sponsors/thisiskeithb)
+* Grab latest version (or whichever version you like) from the release section [here](https://github.com/hillsoftware/sv06/releases)
+* Put binary on a fresh FAT32 formatted SD card and insert the sd card into your SV06 while it is powered off
+* Boot up SV06.  It may take 10-20 seconds. Screen will flash and it should boot. The SV06 Stock board can sometimes be temperamental with sd cards & flashing, if your flash fails & you're left with a blue screen only, switch off & try another card, a new name brand with a fresh format helps.
+* It should reset the eeprom when changing a major firmware, but you can config/advanced/initialize eeprom & reset too if you wish.
+* Please ensure your X gantry is perfectly level to your bed , do this manually & not with the Auto Z Align function.Use two identical objects on the bed, one under each side of the gantry & lower the gantry down by hand, do not use the motors to lower it, steppers must be disabled or printer should be turned off.
+* Go to Motion / Homing and select Auto Home. Watch the homing process. The X axis should go ALL the way to the left and bump up against the left side of the frame. The Y axis should go ALL the way to the back and bump into the back of the frame. If either of these don’t go all the way, or make grinding noises your sensitivity is too high or too low respectively. If you have an issue with the X axis not going all the way to the left your sensorless homing for the X is too sensitive. Likewise if it grinds loudly against the left side it is not sensitive enough. Go to Configuration / Advanced / TMC Drivers / Sensorless Homing.  Go to the axis you need to tweak (X or Y). If your X axis stops before hitting the left side you are too sensitive on X.  So lower the X value by 5 and retry homing. If your X grinds too much for instance on the left side, you are sensitive enough so raise the X value by 5. Use the same process for Y if it has issues. Once you tweak the values to your liking, be sure to save settings so they persist reboots.
+* Autotune PID.  Configuration / Advanced / Temperatures / PID Autotune Extruder (wait for finish). Be aware this can take awhile
+* The way to tell PID tune is done is your hotend will be cooling down to room temp. 
+* Store Settings is a good idea here incase of reboot
+* Autotune Bed PID Configuration / Advanced / Temperatures / PID Autotune Bed (wait for finish)
+* Store Settings is a good idea here incase of reboot
+* Before doing any of the following steps. Make sure there is NO filament hanging out of the nozzle . The Extruder autotune done previously can cause filament to ooze out. This can cause you to get faulty calibrations when you do a Z offset or X-Twist as the dry filament will make you think you are closer to the bed that you are!
+* Go to Configuration/Advanced/Probe Offsets /Z Offset Wizard (No X-Twist) & calibrate your z offset. Save settings.
+## If you downloaded the UBL version follow these steps next
+* Go to Motion / Unified Bed Leveling / UBL Mesh Wizard
+* Let the UBL probe all the points it can. It won’t be able to do all 100. This is normal.
+* Settings should autosave after UBL finishes, but you can save yourself too if you wish
+## If you downloaded the bi-linear version follow these steps next
+* Go to Motion / Bed Leveling / Level Bed
+* Let it probe all 25 points
+* When finished do a store settings to save the mesh data
+## The following steps are for UBL or bi-linear versions
+* Do a test print now before trying x-twist.   This is to see if the UBL or bilinear leveling is enough to compensate for your issues with first layers and such before even trying the x-twist. Make sure you have proper startup g-code to use the UBL or bi-linear mesh as mentioned below. 
+* If your print is good.  Congratulations and happy printing.
+* If it didn’t help enough, go ahead and run X-Twist. Configuration / Advanced / Probe Offsets / X-Twist
+* IMPORTANT ! Rerun your UBL or bi-linear mesh after doing the X-Twist ( the twist doesn’t modify existing mesh data, if modifies future probed points as the UBL or bi-linear leveling does its thing )
+* Save settings / Do a test print
+* If your print is good, happy printing. If not, come on to the SV06 Facebook group and let us know. Pictures, detail, data, etc can help us in possibly identifying your issue and seeing if we can improve the firmware.
+* Also if you find the UBL and bi-linear are not enough for your unit, you can download the manual-mesh version. This one functions like the bi-linear but you manually use the paper or feeler guage with the nozzle for the 5x5 array.  Be sure to save after.  For people who have struggled with their units getting good first layers with stock firmware, or my UBL or bi-linear version, the manual mesh has fixed their issue.  Mind you this is a manual process and takes the probe out of the picture.
 
  🇺🇸  **Jason Smith**
        [@sjasonsmith](https://github.com/sjasonsmith)
@@ -135,7 +161,13 @@ Regular users can open and close their own issues, but only the administrators c
        [@ellensp](https://github.com/ellensp)
        [<kbd>  Donate 💸  </kbd>](https://ko-fi.com/ellensp)
 
-</td><td>
+* X-Twist Compensation  Compensates for a twisted X axis by having the user manually take three measurements of the nozzle to the bed and compares them to the probes calculation for that point. It then modifies all future probe points to try to compensate for the twist in the X-Axis. It is very important that after doing the twist you re-run the UBL wizard since the X-Twist values don’t change the existing mesh in memory, only as new points are probed.  Also you need to be as precise and consistent as possible when calibrating the 3 X-Twist points. It is recommended to use a feeler gauge so you can make sure each of the three points has the nozzle exactly the same distance from the bed as the others.
+* X-Twist Reset Menu : A menu option was added to reset the X-Twist data and turn it off. This would be useful if you want to wipe the twist as you don’t need it, or want to try it without it. NOTE: You must save your settings if you want to make the disabling persistent after a power off. Plus you need to redo your UBL mesh.
+* PID Extruder and Bed Control
+* Power Loss Recover This feature is turned off by default
+* Filament Runout Sensor Support This feature is turned off by default. The SV06 doesn’t come with a runout sensor, so here is a [link](https://www.printables.com/model/347596-endstop-runout-sensor) to Rory’s design for a mount to install one on your SV06
+*  Z-Offset Wizard. If you don’t need the X-Twist because your X gantry isn’t twisted you can use this wizard to adjust your Z-Offset
+* Rory’s tweaks
 
  🇺🇸  **Bob Kuhn**
        [@Bob-the-Kuhn](https://github.com/Bob-the-Kuhn)
