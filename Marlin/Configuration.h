@@ -83,8 +83,8 @@
 // Show the bitmap in Marlin/_Statusscreen.h on the status screen.
 #define CUSTOM_STATUS_SCREEN_IMAGE
 
-#define SHORT_BUILD_VERSION      "2.1.2v60"
-#define STRING_DISTRIBUTION_DATE "2023-03-18"
+#define SHORT_BUILD_VERSION      "2.1.2v60b"
+#define STRING_DISTRIBUTION_DATE "2023-03-27"
 #define WEBSITE_URL              "techdungeon.xyz"
 
 // @section machine
