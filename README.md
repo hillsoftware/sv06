@@ -1,5 +1,7 @@
 # Sovol SV06 2.1.x bugfix build
 
+## Due to some issues with updates to Marlin 2.1.x bugfix causing extruder issues, I am temporarily removing v60 from the releases. If you are using v60 I encourage you to go back to v57 until the upstream issues are sorted and I can push a newer update. I am sorry for the inconvenience. 
+
 ## This is for the STOCK Sovol mainboard that comes with the SV06
 
 ## NOTE THIS IS HIGHLY EXPERIMENTAL FIRMWARE! USE AT YOUR OWN RISK!
